@@ -1,0 +1,14 @@
+
+  Info
+    Log in to an Expo account
+
+  Usage
+    $ npx expo login
+
+  Options
+    -u, --username <string>  Username
+    -p, --password <string>  Password
+    --otp <string>           One-time password from your 2FA device
+    -s, --sso                Log in with SSO
+    -h, --help               Usage info
+

@@ -1,0 +1,52 @@
+
+    // --- REPLICATING ---
+    private lib_Replicating(w: number, h: number, type: string, exitPos: Vector2): Entity[] {
+        const entities: Entity[] = []
+        for(let i=0; i<5; i++) {
+            const ent = new Entity(`rep-${i}`, 'obstacle', Math.random()*w, Math.random()*h/2, 30, '#ff00ff')
+            ent.behavior = 'bouncing'; ent.vel = new Vector2((Math.random()-0.5)*100, (Math.random()-0.5)*100)
+            if(type === 'split') {
+                ent.mimicType = 'replicating'
+                ent.generation = 0
+            }
+            entities.push(ent)
+        }
+        return entities
+    }
+
+    // --- RAIN ---
+    private lib_Rain(w: number, h: number, type: string, exitPos: Vector2): Entity[] {
+        const entities: Entity[] = []
+        const count = type === 'heavy' ? 20 : 10
+        for(let i=0; i<count; i++) {
+            const ent = new Entity(`rain-${i}`, 'obstacle', Math.random()*w, Math.random()*h, 15, '#0000ff')
+            ent.behavior = 'drifting'; ent.vel = new Vector2(0, 200 + Math.random()*100)
+            ent.mimicType = 'infinite-scroll' // Needs verify this type exists or implementation
+            // Actually 'drifting' usually just goes off screen. 'rain' implies wrapping.
+            // I'll make mimicType 'rain' and handle wrapping in update.
+            ent.mimicType = 'rain'
+            entities.push(ent)
+        }
+        return entities
+    }
+
+    // --- SOLAR FLARE ---
+    private lib_SolarFlare(w: number, h: number, type: string, exitPos: Vector2): Entity[] {
+        const entities: Entity[] = []
+        const sun = new Entity('sun-flare', 'obstacle', w/2, h/2, 60, '#ffaa00')
+        sun.behavior = 'static'
+        // Flares will be spawned dynamically? Or just preset rotating ones?
+        // Let's make rotating arms that expand/contract
+        entities.push(sun)
+        for(let i=0; i<4; i++) {
+            const arm = new Entity(`flare-${i}`, 'obstacle', w/2, h/2, 20, '#ff4400')
+            arm.behavior = 'orbit'; arm.orbitCenter = new Vector2(w/2, h/2); 
+            arm.orbitRadius = 100; arm.orbitSpeed = 1.5; arm.angle = (Math.PI/2)*i
+            // Make them pulse radius? 
+            arm.pulseMin = 50; arm.pulseMax = 250; arm.pulseSpeed = 1.0
+            // Actually 'orbit' handles radius. I need 'oscillating-orbit'?
+            // Let's just use 'orbit' with high speed.
+            entities.push(arm)
+        }
+        return entities
+    }

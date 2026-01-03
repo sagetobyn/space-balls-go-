@@ -1,0 +1,14 @@
+log in with your Expo account
+
+USAGE
+  $ eas login [-s]
+
+FLAGS
+  -s, --sso  Login with SSO
+
+DESCRIPTION
+  log in with your Expo account
+
+ALIASES
+  $ eas login
+

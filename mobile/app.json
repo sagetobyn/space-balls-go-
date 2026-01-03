@@ -1,0 +1,66 @@
+{
+  "expo": {
+    "name": "Space Balls GO!",
+    "slug": "space-balls-game-robin",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "jsEngine": "jsc",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F172A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hassiumlabs.spaceballs"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F172A"
+      },
+      "package": "com.hassiumlabs.spaceballs",
+      "versionCode": 3,
+      "permissions": [
+        "VIBRATE",
+        "INTERNET"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35
+          }
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
+      ],
+      [
+        "./plugins/withPlayGames.js",
+        {
+          "projectId": "72160717140"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "56001fc2-a98f-4d30-80e0-dc7ef6b82b08"
+      }
+    }
+  }
+}

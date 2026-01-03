@@ -1,0 +1,9 @@
+IMAGE GENERATION PROMPTS
+
+Since automatic image generation is currently unavailable, please use these prompts with an AI image generator (like Midjourney, DALL-E 3, or Adobe Firefly) to create your store graphics.
+
+1. APP ICON (512x512)
+Prompt: "A premium mobile game app icon for 'Space Balls GO'. Features a glowing cyan/turquoise energy ball with ethereal glow effect and motion trail, floating in deep space with stars and purple nebula background. Clean, simple, iconic design. No text. High contrast, vibrant neon colors. The ball is the clear focal point with a bright core and soft outer glow. Modern minimalist app icon aesthetic, perfect for app store. Square format."
+
+2. FEATURE GRAPHIC (1024x500)
+Prompt: "A wide cinematic promotional banner for mobile arcade game 'Space Balls GO'. Left side: bold futuristic game title 'SPACE BALLS GO' in glowing cyan text. Right side: exciting gameplay scene with a glowing cyan ball navigating through red circular obstacles, orbiting planets, and cosmic hazards in deep space. Purple-blue nebula background with stars. Dynamic motion blur effects. Epic action game promo art. Wide banner format 1024x500 aspect ratio."
