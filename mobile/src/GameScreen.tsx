@@ -448,6 +448,7 @@ export default function GameScreen({ onBack, onQuitToMenu }: { onBack?: () => vo
                 }
                 // [NEW] Hide Lightning during intro (timer)
                 const showGround = gameStateRef.current !== 'intro'
+                renderer.clear()  // [FIX] Clear frame to prevent ghosting/trailing
                 renderer.drawBackground(gameTimeRef.current, currentLevel, showGround)
                 particles.update(dt)
                 renderer.drawParticles(particles)
