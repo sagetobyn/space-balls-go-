@@ -7,24 +7,27 @@ import MainMenu from './src/screens/MainMenu'
 import Settings from './src/screens/Settings'
 import Achievements from './src/screens/Achievements'
 import HowToPlay from './src/screens/HowToPlay'
+import LegalScreen from './src/screens/LegalScreen'
+import Onboarding from './src/screens/Onboarding'
 import { useGameStore } from './src/store/gameStore'
 import { MusicManager } from './src/core/MusicManager'
 // import { PlayGamesService } from './src/services/PlayGamesService' // Temporarily disabled
 
-type ScreenState = 'splash' | 'menu' | 'levels' | 'game' | 'settings' | 'achievements' | 'how_to_play'
+type ScreenState = 'splash' | 'onboarding' | 'menu' | 'levels' | 'game' | 'settings' | 'achievements' | 'how_to_play' | 'legal'
 
 export default function App() {
   const [screen, setScreen] = useState<ScreenState>('splash')
   const startLevel = useGameStore(state => state.actions.startLevel)
+  const hasSeenOnboarding = useGameStore(state => state.hasSeenOnboarding)
   const [isAudioReady, setIsAudioReady] = useState(false)
 
-  // Splash screen timer
+  // Splash screen timer - check if first-time user
   useEffect(() => {
     const timer = setTimeout(() => {
-      setScreen('menu')
+      setScreen(hasSeenOnboarding ? 'menu' : 'onboarding')
     }, 2000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [hasSeenOnboarding])
 
   // Audio and IAP initialization
   useEffect(() => {
@@ -81,6 +84,10 @@ export default function App() {
         </View>
       )}
 
+      {screen === 'onboarding' && (
+        <Onboarding onComplete={() => setScreen('menu')} />
+      )}
+
       {screen === 'menu' && (
         <MainMenu
           onStart={() => setScreen('levels')}
@@ -98,9 +105,10 @@ export default function App() {
       )}
 
       {screen === 'game' && <GameScreen onBack={() => setScreen('levels')} onQuitToMenu={() => setScreen('menu')} />}
-      {screen === 'settings' && <Settings onBack={() => setScreen('menu')} />}
+      {screen === 'settings' && <Settings onBack={() => setScreen('menu')} onLegal={() => setScreen('legal')} onReplayTutorial={() => setScreen('onboarding')} />}
       {screen === 'achievements' && <Achievements onBack={() => setScreen('menu')} />}
       {screen === 'how_to_play' && <HowToPlay onBack={() => setScreen('menu')} />}
+      {screen === 'legal' && <LegalScreen onBack={() => setScreen('settings')} />}
 
       <StatusBar style="light" hidden />
     </View>

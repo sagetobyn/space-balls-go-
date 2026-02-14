@@ -27,6 +27,7 @@ interface GameState {
     levelFailures: number
     levelProgress: Record<number, LevelData>
     settings: SettingsState // [NEW]
+    hasSeenOnboarding: boolean // [NEW] First-time user detection
     actions: {
         startLevel: (level: number) => void
         completeLevel: () => void
@@ -36,6 +37,7 @@ interface GameState {
         resetLevel: () => void
         resetGame: () => void
         updateSettings: (settings: Partial<SettingsState>) => void // [NEW]
+        setOnboardingComplete: () => void // [NEW]
     }
 }
 
@@ -57,6 +59,7 @@ export const useGameStore = create<GameState>()(
                 joystickMode: 'hidden', // Default hidden per user request
                 speedModifier: 1.0 // Default Normal
             },
+            hasSeenOnboarding: false, // [NEW] Track first-time users
             actions: {
                 startLevel: (level) => set({ currentLevel: level, state: 'playing', levelFailures: 0 }),
                 completeLevel: () => set({ state: 'won' }),
@@ -95,7 +98,8 @@ export const useGameStore = create<GameState>()(
                         const { MusicManager } = require('../core/MusicManager')
                         MusicManager.setMasterVolume(newSettings.masterVolume)
                     }
-                }
+                },
+                setOnboardingComplete: () => set({ hasSeenOnboarding: true })
             }
         }),
         {
@@ -105,7 +109,8 @@ export const useGameStore = create<GameState>()(
                 currentLevel: state.currentLevel,
                 totalFailures: state.totalFailures,
                 levelProgress: state.levelProgress,
-                settings: state.settings // [NEW]
+                settings: state.settings, // [NEW]
+                hasSeenOnboarding: state.hasSeenOnboarding // [NEW]
             }),
         }
     )

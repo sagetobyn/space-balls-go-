@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, BackHandler } from 'react-native'
 import { Button } from '../components/ui/Button'
+import { FeedbackModal } from '../components/FeedbackModal'
 import { useGameStore } from '../store/gameStore'
 
 interface SettingsProps {
     onBack: () => void
+    onLegal: () => void
+    onReplayTutorial: () => void
 }
 
-export default function Settings({ onBack }: SettingsProps) {
+export default function Settings({ onBack, onLegal, onReplayTutorial }: SettingsProps) {
     // Handle hardware back button
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -20,6 +23,7 @@ export default function Settings({ onBack }: SettingsProps) {
     const resetGame = useGameStore(state => state.actions.resetGame)
     const settings = useGameStore(state => state.settings)
     const updateSettings = useGameStore(state => state.actions.updateSettings)
+    const [showFeedback, setShowFeedback] = useState(false)
 
     const handleFullReset = () => {
         Alert.alert(
@@ -119,6 +123,32 @@ export default function Settings({ onBack }: SettingsProps) {
                     </View>
                 </View>
 
+                {/* Legal Section */}
+                <View style={styles.card}>
+                    <Text style={styles.sectionTitle}>HELP & INFO</Text>
+                    <TouchableOpacity
+                        onPress={onReplayTutorial}
+                        style={[styles.legalBtn, { marginBottom: 10 }]}
+                    >
+                        <Text style={styles.legalBtnText}>🎮  Replay Tutorial</Text>
+                        <Text style={styles.legalArrow}>→</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={onLegal}
+                        style={styles.legalBtn}
+                    >
+                        <Text style={styles.legalBtnText}>📋  Privacy & Terms</Text>
+                        <Text style={styles.legalArrow}>→</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setShowFeedback(true)}
+                        style={[styles.legalBtn, { marginTop: 10 }]}
+                    >
+                        <Text style={styles.legalBtnText}>⭐  Rate App</Text>
+                        <Text style={styles.legalArrow}>→</Text>
+                    </TouchableOpacity>
+                </View>
+
                 {/* Danger Zone */}
                 <View style={[styles.card, styles.dangerCard]}>
                     <Text style={[styles.sectionTitle, { color: '#ef4444' }]}>DANGER ZONE</Text>
@@ -127,6 +157,12 @@ export default function Settings({ onBack }: SettingsProps) {
 
                 <Button title="BACK" onPress={onBack} variant="secondary" style={{ marginTop: 10, marginBottom: 40 }} />
             </ScrollView>
+
+            {/* Feedback Modal */}
+            <FeedbackModal
+                visible={showFeedback}
+                onClose={() => setShowFeedback(false)}
+            />
         </View>
     )
 }
@@ -267,5 +303,27 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 15,
         fontStyle: 'italic',
-    }
+    },
+    // Legal styles
+    legalBtn: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.05)',
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.08)',
+    },
+    legalBtnText: {
+        color: '#e2e8f0',
+        fontSize: 14,
+        fontWeight: '500',
+    },
+    legalArrow: {
+        color: '#22d3ee',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 })

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Space Balls GO!",
     "slug": "space-balls-game-robin",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
         "backgroundColor": "#0F172A"
       },
       "package": "com.hassiumlabs.spaceballs",
-      "versionCode": 6,
+      "versionCode": 7,
       "permissions": [
         "VIBRATE",
         "INTERNET"
